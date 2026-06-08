@@ -1,8 +1,8 @@
 # NexusPay 💳
 
-### Secure & Scalable Payment Gateway Platform
+### Secure, Scalable & Enterprise-Ready Payment Gateway Platform
 
-NexusPay is a backend-focused **payment gateway system** inspired by modern fintech platforms like Razorpay. It is designed to handle secure transactions between customers, merchants, and payment services with a focus on scalability, security, and clean architecture.
+NexusPay is a backend-focused **payment gateway system** inspired by modern fintech platforms like Razorpay. It is designed to handle secure transactions between customers, merchants, and payment services with a focus on scalability, security, reliability, and clean architecture.
 
 ---
 
@@ -12,19 +12,25 @@ NexusPay is a backend-focused **payment gateway system** inspired by modern fint
 * 🏪 Merchant Registration & Management
 * 💳 Payment Processing API
 * 🔄 Transaction Tracking
-* 🔁 Refund Handling (planned / optional)
-* 📩 Webhook Support (for payment status updates)
-* 🧾 Secure API design with role-based access control
+* 🔁 Refund Handling
+* 📩 Webhook Support for payment events
+* 🧾 Role-Based Access Control (RBAC)
+* 📜 Audit Logging for critical operations
+* 🚦 API Request Validation & Exception Handling
+* 🔑 Merchant API Key Management
+* 📊 Payment Analytics & Reporting (Planned)
+* ⚡ Idempotent Payment Requests (Planned)
 
 ---
 
 ## 🛠️ Tech Stack
 
 * **Backend:** Java, Spring Boot
-* **Security:** Spring Security, JWT
-* **Database:** MySQL
+* **Security:** Spring Security, JWT, BCrypt
+* **Database:** PostgreSQL
 * **ORM:** Spring Data JPA (Hibernate)
 * **Build Tool:** Maven
+* **Documentation:** Swagger / OpenAPI
 * **Other Tools:** Lombok, Validation API
 
 ---
@@ -33,17 +39,43 @@ NexusPay is a backend-focused **payment gateway system** inspired by modern fint
 
 The system follows a modular layered architecture:
 
-```
-Controller Layer → Service Layer → Repository Layer → Database
+```text
+Controller Layer → Service Layer → Repository Layer → PostgreSQL
 ```
 
-### Core Modules:
+### Core Modules
 
 * Auth Service (Login/Register/JWT)
 * User Service
 * Merchant Service
 * Payment Service
 * Transaction Service
+* Refund Service
+* Notification Service
+* Webhook Service
+
+---
+
+## 📂 Project Structure
+
+```text
+src/main/java
+│
+├── auth
+├── merchant
+├── payment
+├── transaction
+├── refund
+├── notification
+│
+├── common
+│   ├── config
+│   ├── security
+│   ├── exception
+│   └── util
+│
+└── NexusPayApplication
+```
 
 ---
 
@@ -58,11 +90,23 @@ Controller Layer → Service Layer → Repository Layer → Database
 
 * POST `/api/merchant/create`
 * GET `/api/merchant/{id}`
+* PUT `/api/merchant/{id}`
 
 ### Payment
 
 * POST `/api/payment/create`
+* GET `/api/payment/{id}`
 * GET `/api/payment/status/{id}`
+
+### Transaction
+
+* GET `/api/transaction/{id}`
+* GET `/api/transaction/history`
+
+### Refund
+
+* POST `/api/refund/create`
+* GET `/api/refund/{id}`
 
 ---
 
@@ -71,7 +115,21 @@ Controller Layer → Service Layer → Repository Layer → Database
 * JWT-based authentication
 * Password encryption using BCrypt
 * Role-based access control (User / Merchant / Admin)
-* Secure REST APIs
+* Stateless authentication architecture
+* Request validation using Jakarta Validation
+* Global exception handling
+* Secure REST APIs following industry best practices
+
+---
+
+## ⚙️ Non-Functional Requirements
+
+* High scalability
+* Secure payment processing
+* Maintainable codebase
+* Modular architecture
+* Extensible service design
+* Production-ready coding standards
 
 ---
 
@@ -90,14 +148,49 @@ mvn spring-boot:run
 
 ---
 
-## 📌 Future Enhancements
+## 📈 Future Enhancements
 
 * Redis caching for performance optimization
-* Payment gateway integrations (Stripe/Razorpay sandbox)
-* Docker containerization
-* CI/CD pipeline setup
+* Apache Kafka for event-driven communication
+* Microservices architecture
 * API Gateway integration
-* Event-driven architecture using Kafka
+* Docker containerization
+* CI/CD pipeline using GitHub Actions
+* Distributed tracing and centralized logging
+* Payment gateway integrations (Stripe/Razorpay Sandbox)
+* Rate limiting and throttling
+* Cloud deployment on AWS
+* Monitoring with Prometheus & Grafana
+
+---
+
+## 🏛️ Target Architecture
+
+```text
+Client
+   │
+   ▼
+API Gateway
+   │
+   ▼
+Auth Service
+   │
+   ├── Merchant Service
+   ├── Payment Service
+   ├── Transaction Service
+   ├── Refund Service
+   └── Notification Service
+          │
+          ▼
+       Kafka
+          │
+          ▼
+      PostgreSQL
+
+          ▼
+
+        Redis
+```
 
 ---
 
@@ -106,10 +199,11 @@ mvn spring-boot:run
 **Atish Kumar**
 
 * Java Backend Developer
+* Spring Boot Enthusiast
 * Passionate about System Design & Scalable Architectures
 
 ---
 
 ## ⭐ Project Goal
 
-The goal of NexusPay is to simulate a real-world **payment processing system** and demonstrate backend engineering skills, system design thinking, and secure API development practices.
+The goal of NexusPay is to simulate a real-world **payment processing platform** and demonstrate expertise in backend development, secure API design, distributed systems, event-driven architecture, database design, and scalable software engineering practices.
